@@ -1,0 +1,73 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #1e232c;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Title{
+  text-decoration: underline ;
+  font-family: Baskerville Old Face;
+}
+
+.Quote{
+  color: #dfa44d;
+  font-style: italic;
+  font-family: Baskerville Old Face;
+}
+
+.Author{
+  color: #ddc095;
+  font-family: Baskerville Old Face;
+  font-style:oblique;
+}
+
+.Button{
+  background-color: aquamarine;
+  border:#1e232c solid 0.5rem;
+  border-radius: 15px;
+  font-family: Calibri;
+  color: #000;
+  font-size: 1.2rem;
+  font-weight: 1000;
+}
+
+.Text{
+  font-family: Baskerville Old Face;
+}
+
+.Label{
+  font-family: Verdana;
+}
