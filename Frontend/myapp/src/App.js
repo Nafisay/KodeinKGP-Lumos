@@ -1,58 +1,70 @@
-import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
 import './App.css';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import {ethers} from 'ethers';
+import abi from './abi.json';
 
-  function App() {
-    const [quote, setQuote] = useState()
-    const [quoteAuthor, setQuoteAuthor] = useState()
-    const [quoteString, setQuoteString] = useState()
-    const [submit, setSubmit] = useState()
+function App() {
+  const [contract, setContract] = useState();
+  const [todoCount, setTodoCount] = useState(0);
+  const [inputItem, setInputItem] = useState();
+  const [inputListItem, setInputListItem] = useState();
+  const [inputListItemRes, setInputListItemRes] = useState();
 
-    useEffect(() => {
-      axios.get('http://localhost:5050/quote')
-      .then((res) => {
-        setQuote(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    }, [submit])
-
-    const handleSubmit = async () => {
-      try{
-        const res = axios.post('http://localhost:5050/quote',{
-          "author" : quoteAuthor,
-          "quote" : quoteString
-        });
-        setSubmit(res);
-      }
-      catch{
-        alert("Something Went Wrong")
-      }
-    }
-
-    return (
-      <div className = "App"> 
-          <header className = "App-header">
-          <h1 className = "Title">Today's Quotes are:</h1>
-          {quote && quote.map((item) => (<div> <p className = "Quote">"{item.quote}"</p><p className = "Author">-- {item.author}</p> </div>))}
-          
-          <div>
-            <h3 className = "Text">Go ahead and your add custom quote!</h3>
-            <div>
-              <label className = "Label">Your Name: </label>
-              <input onChange = {(e) => {setQuoteAuthor(e.target.value)}}/>
-            </div>
-          <div>
-            <label className = "Label">Your Quote: </label>
-            <input onChange = {(e) => {setQuoteString(e.target.value)}}/>
-          </div>
-          <button className = "Button" onClick = {handleSubmit}>Submit</button>
-          </div>
-        </header>
-      </div>
-    );
+  const contractExecution = async() => {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const Contract = new ethers.Contract("0x01AeC87EB494942D6f396f3EdAC9D6dC03e6ae9a", abi, signer)
+    setContract(Contract)
   }
 
-  export default App;
+  const getTodoCount = async () => {
+    if(contract){
+      const res = await contract.count();
+      setTodoCount(Number(res));
+    }
+  }
+
+  useEffect (() => {
+    contractExecution();
+  }, [])
+
+  const handleChange = (e) => {
+    setInputItem(e.target.value)
+  }
+
+  const handleSubmit = async () => {
+    const res = await contract.getTodo(inputItem);
+  }
+
+  const handleGetTodoList = async () => {
+    const res = await contract.todoList(inputListItem-1);
+    setInputListItemRes(res);
+  }
+
+  const handleTodoList = (e) => {
+    setInputListItem(e.target.value);
+  }
+
+  return (
+    <main className='App-header'>
+    <div className='App'>
+      <button className='Button' onClick = {getTodoCount}>Get Count</button>
+      <h1 className='Title'> 
+        Count of ToDo: {todoCount}
+      </h1>
+      <div className='Text'>
+        Enter the input value
+        <input className='Input' onChange={handleChange}></input>
+        <button className='Button' onClick={handleSubmit}>Submit</button>
+      </div>
+      <div>
+        <input className='Input' onChange={handleTodoList}></input>
+        <button className='Button' onClick = {handleGetTodoList}>Get ToDo List</button>
+        <h3>{inputListItemRes}</h3>
+      </div>
+    </div>
+    </main>
+  )
+}
+
+export default App

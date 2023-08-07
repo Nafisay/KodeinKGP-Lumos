@@ -21,7 +21,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #C2BF9D;
 }
 
 .App-link {
@@ -38,12 +38,11 @@
 }
 
 .Title{
-  text-decoration: underline ;
   font-family: Baskerville Old Face;
 }
 
-.Quote{
-  color: #dfa44d;
+.Text{
+  color: #CFB883;
   font-style: italic;
   font-family: Baskerville Old Face;
 }
@@ -55,19 +54,21 @@
 }
 
 .Button{
-  background-color: aquamarine;
+  background-color: #509A72;
+  border:#1e232c solid 0.5rem;
+  border-radius: 10px;
+  font-family: Verdana;
+  color: #000;
+  font-size: 1.2rem;
+  font-weight: 1000;
+}
+
+.Input{
+  background-color: beige;
   border:#1e232c solid 0.5rem;
   border-radius: 15px;
   font-family: Calibri;
   color: #000;
   font-size: 1.2rem;
   font-weight: 1000;
-}
-
-.Text{
-  font-family: Baskerville Old Face;
-}
-
-.Label{
-  font-family: Verdana;
 }
